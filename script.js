@@ -34,11 +34,7 @@ function setup() {
 function updatePaper(text) {
   const paperDirection = document.getElementById("paper-direction").value;
 
-  if (paperDirection === "horizontal") {
-    showHorizontalText(text);
-  } else {
-    showVerticalText(text);
-  }
+  showText(text, paperDirection);
 }
 
 function setupInputEventListeners() {
@@ -49,7 +45,45 @@ function setupInputEventListeners() {
   });
 }
 
-function createFormattedText(text) {
+function createVerticalTextArray(text) {
+  const paper = [];
+
+  let row = 0;
+  let column = selectedColumn - 1; // 一番右から開始
+
+  for (const character of text) {
+    // 。、が行の先頭に来る場合は、前の列の最後に移動させる
+    if ((character === "。" || character === "、") && row === 0) {
+      paper[selectedRow - 1][column + 1] += character;
+      continue;
+    }
+
+    if (character === "\n") {
+      if (row === 0) {
+        paper[row] = paper[row] || [];
+        paper[row][column] = character;
+        continue;
+      }
+
+      column--;
+      row = 0;
+      continue;
+    }
+
+    paper[row] = paper[row] || [];
+    paper[row][column] = character;
+    row++;
+
+    if (row >= selectedRow) {
+      column--;
+      row = 0;
+    }
+  }
+
+  return paper;
+}
+
+function createHorizontalTextArray(text) {
   const paper = [];
 
   let row = 0;
@@ -92,28 +126,9 @@ function createFormattedText(text) {
   return paper;
 }
 
-function showVerticalText(text) {
+function showText(text, direction = "vertical") {
   const paperContainer = document.getElementById("paper-container");
-  const textArray = createFormattedText(text);
-
-  for(let i = 0; i < Number(selectedRow); i++) {
-    for(let j = 0; j < Number(selectedColumn); j++) {
-      if (textArray[i]?.[j] === previousTextArray[i]?.[j]) {
-        continue;
-      }
-
-      const childIndex = (j * selectedColumn) + ((i + j) * selectedColumn);
-      const cell = cells[childIndex];
-      cell.textContent = textArray[i]?.[j] ?? "\u3000";
-
-      console.log(`i: ${i}, j: ${j}, childIndex: ${childIndex}, text: ${textArray[i]?.[j] ?? "\u3000"}`);
-    }
-  }
-}
-
-function showHorizontalText(text) {
-  const paperContainer = document.getElementById("paper-container");
-  const textArray = createFormattedText(text);
+  const textArray = (direction === "vertical") ? createVerticalTextArray(text) : createHorizontalTextArray(text);
 
   for(let i = 0; i < Number(selectedRow); i++) {
     for(let j = 0; j < Number(selectedColumn); j++) {
