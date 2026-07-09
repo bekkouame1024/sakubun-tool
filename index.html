@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <main>
+    <textarea id="textarea"></textarea>
+    
+    <div>
+      <label>縦</label>
+      <input id="paper-row" type="number">
+    </div>
+    <div>
+      <label>横</label>
+      <input id="paper-column" type="number">
+    </div>
+    <div>
+      <label>向き</label>
+      <select id="paper-direction">
+        <option value="horizontal">横書き</option>
+        <option value="vertical">縦書き</option>
+      </select>
+    </div>
+
+    <button onclick="setup()">作成</button>
+    
+    <div id="paper-wrapper">
+      <div id="paper-container"></div>
+    </div>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
