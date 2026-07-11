@@ -46,12 +46,13 @@ function setupInputEventListeners() {
 }
 
 function createVerticalTextArray(text) {
+  const normalizedText = normalizeText(text);
   const paper = [];
 
   let row = 0;
   let column = selectedColumn - 1; // 一番右から開始
 
-  for (const character of text) {
+  for (const character of normalizedText) {
     // 。、が行の先頭に来る場合は、前の列の最後に移動させる
     if ((character === "。" || character === "、") && row === 0) {
       paper[selectedRow - 1][column + 1] += character;
@@ -84,6 +85,7 @@ function createVerticalTextArray(text) {
 }
 
 function createHorizontalTextArray(text) {
+  const normalizedText = normalizeText(text);
   const paper = [];
 
   let row = 0;
@@ -91,7 +93,7 @@ function createHorizontalTextArray(text) {
 
   paper[row] = [];
 
-  for (const character of text) {
+  for (const character of normalizedText) {
     // 。、が行の先頭に来る場合は、前の行の最後に移動させる
     if ((character === "。" || character === "、") && column === 0) {
       paper[row - 1][selectedColumn - 1] += character;
@@ -124,6 +126,22 @@ function createHorizontalTextArray(text) {
   }
 
   return paper;
+}
+
+function normalizeText(text) {
+  const textArray = [...text];
+
+  return textArray.reduce((result, char, index) => {
+    const prevChar = textArray[index - 1];
+
+    if (prevChar === "。" && (char === "」" || char === "』")) {
+      result[result.length - 1] += char;
+    } else {
+      result.push(char);
+    }
+
+    return result;
+  }, []);
 }
 
 function showText(text, direction = "vertical") {
