@@ -6,6 +6,7 @@ let cells = [];
 function setup() {
   const paperContainer = document.getElementById("paper-container");
   const textarea = document.getElementById('textarea');
+  const direction = document.getElementById("paper-direction").value;
 
   paperContainer.innerHTML = "";
   cells = [];
@@ -21,6 +22,7 @@ function setup() {
   for(let i = 0; i < selectedRow; i++) {
     for(let j = 0; j < selectedColumn; j++) {
       const cell = document.createElement("div");
+      cell.classList.add("cell");
       paperContainer.appendChild(cell);
 
       cells.push(cell);
@@ -28,6 +30,8 @@ function setup() {
   }
 
   previousTextArray = [];
+
+  changeTextStyle(direction);
   updatePaper(textarea.value);
 }
 
@@ -161,6 +165,20 @@ function showText(text, direction = "vertical") {
   }
 
   previousTextArray = textArray;
+}
+
+function changeTextStyle(direction) {
+  const cell = document.getElementsByClassName("cell");
+
+  for (let i = 0; i < cells.length; i++) {
+    if (direction === "vertical") {
+      cells[i].style.textOrientation = "upright";
+      cells[i].style.writingMode = "vertical-rl";
+    } else if (direction === "horizontal") {
+      cells[i].style.textOrientation = "mixed";
+      cells[i].style.writingMode = "horizontal-tb";
+    }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function () {

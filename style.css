@@ -30,12 +30,14 @@ main {
   margin: auto;
 }
 
-#paper-container > * {
+#paper-container .cell {
   aspect-ratio: 1 / 1;
   border: 1px solid rgb(170, 170, 170, 0.5);
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  letter-spacing: -0.12em;
 }
 
