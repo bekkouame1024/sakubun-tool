@@ -66,6 +66,10 @@ function setup() {
 
   changeTextStyle(direction);
   updatePaper(textarea.value);
+
+  window.addEventListener("beforeunload", (event) => {
+    event.preventDefault();
+  });
 }
 
 function updatePaper(text) {
