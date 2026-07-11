@@ -58,7 +58,7 @@ function createVerticalTextArray(text) {
 
   for (const character of normalizedText) {
     // 。、が行の先頭に来る場合は、前の列の最後に移動させる
-    if ((character === "。" || character === "、") && row === 0) {
+    if ((character.includes("。") || character.includes("、")) && row === 0) {
       paper[selectedRow - 1][column + 1] += character;
       continue;
     }
@@ -99,7 +99,7 @@ function createHorizontalTextArray(text) {
 
   for (const character of normalizedText) {
     // 。、が行の先頭に来る場合は、前の行の最後に移動させる
-    if ((character === "。" || character === "、") && column === 0) {
+    if ((character.includes("。") || character.includes("、")) && column === 0) {
       paper[row - 1][selectedColumn - 1] += character;
       continue;
     }
