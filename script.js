@@ -3,7 +3,40 @@ let selectedColumn = 0;
 let previousTextArray = [];
 let cells = [];
 
+//値が入力されているか、自然数かをチェックする
+function validateInput() {
+  const rowInput = document.getElementById("paper-row");
+  const columnInput = document.getElementById("paper-column");
+  const rowValue = rowInput.value.trim();
+  const columnValue = columnInput.value.trim();
+
+  if (rowValue === "" || columnValue === "") {
+    alert("行数と列数を入力してください。");
+    return false;
+  }
+
+  const rowNumber = Number(rowValue);
+  const columnNumber = Number(columnValue);
+
+  if (!Number.isInteger(rowNumber) || rowNumber <= 0 || !Number.isInteger(columnNumber) || columnNumber <= 0) {
+    alert("行数と列数は自然数である必要があります。");
+    return false;
+  }
+
+  return true;
+}
+
 function setup() {
+  if (!validateInput()) {
+    return;
+  }
+
+  const settingsPage = document.getElementById("settings-page");
+  const mainPage = document.getElementById("main-page");
+
+  settingsPage.style.display = "none";
+  mainPage.style.display = "flex";
+
   const paperContainer = document.getElementById("paper-container");
   const textarea = document.getElementById('textarea');
   const direction = document.getElementById("paper-direction").value;
