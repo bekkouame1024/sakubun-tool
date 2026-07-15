@@ -32,11 +32,12 @@
         </select>
       </div>
 
-      <button onclick="setup()" class="button">作成</button>
+      <button onclick="setup()" class="button blue-button">作成</button>
     </div>
 
     <div id="main-page">
       <textarea id="textarea" class="textarea"></textarea>
+      <button onclick="exportAsFile(event)" class="button blue-button" style="margin-top: 2%;">ファイルとして出力</button>
 
       <div id="paper-wrapper">
         <div id="paper-container"></div>
