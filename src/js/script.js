@@ -218,6 +218,30 @@ function changeTextStyle(direction) {
   }
 }
 
+function exportAsFile(event) {
+  const textarea = document.getElementById('textarea');
+  const text = textarea.value;
+
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `sakubun-tool_${timestamp()}.txt`;
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+  a.remove();
+}
+
+function timestamp(date = new Date()) {
+  const pad2 = n => String(n).padStart(2, "0");
+  const pad3 = n => String(n).padStart(3, "0");
+
+  return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}_${pad2(date.getHours())}-${pad2(date.getMinutes())}-${pad2(date.getSeconds())}-${pad3(date.getMilliseconds())}`;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   setupInputEventListeners();
 });

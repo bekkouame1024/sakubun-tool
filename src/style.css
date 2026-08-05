@@ -41,18 +41,21 @@ main {
 
 .button {
   padding: 10px 20px;
-  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.button:hover {
+.blue-button {
+  background-color: #007bff;
+}
+
+.blue-button:hover {
   background-color: #0056b3;
 }
 
-.button:active {
+.blue-button:active {
   background-color: #004085;
 }
 
@@ -70,6 +73,7 @@ main {
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  max-width: 100%;
 }
 
 .input {
